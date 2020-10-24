@@ -1,0 +1,191 @@
+<html>
+
+	<head>
+		<title>PIN FRAME</title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				width:100%;
+				margin: 5px;
+			}
+			#container{
+				max-width: 400px;
+				margin: 0 auto;
+				background-color: #2877BA;
+				padding-top: 90px;
+				box-shadow: 1px 1px 1px #888888;
+			}
+			#logo{
+				max-width: 50px;
+				height: 50px;
+				margin: 0 auto;
+				background-image: url("enter-pin.png");
+				background-repeat: no-repeat;
+				background-size: 50px 50px;
+			}
+			#header{
+				color: #FFFFFF;
+				font-size: 20px;
+			}
+			#headerContent{
+				text-align: center;
+				padding: 25px 0;
+			}
+			p{
+				margin: 25px 0;
+			}
+			.digit{
+				display: inline-block;
+				margin-left: 13px;
+				margin-bottom: 30px;
+				width: 45px;
+				height: 45px;
+				border-radius: 50%;
+				border: 1px solid #FFFFFF;
+			}
+			.digitactive{
+				position: relative;
+				top:28%;
+				margin: auto;
+				width: 20px;
+				height: 20px;
+				background-color: #2877BA;
+				border-radius: 50%;
+			}
+			#content{
+				background-color: #FFFFFF;
+				padding-bottom: 40px;
+			}
+			.number{
+				float: left;
+				margin: 5px 25px auto;
+				width: 80px;
+				height: 30px;
+				padding-top: 8px;
+				text-align: center;
+			}
+			.number:hover{
+				background-color: #99ff66;
+			}
+			.number:active{
+				background-color: #00ff99;
+			}
+			.clear{
+				clear: both;
+				float: none;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="container">
+			<div id="header">
+				<div id="logo"></div>
+				<div id="headerContent">
+					<h2>Enter Your PIN</h2>
+					<p>
+					This is just PIN Frame<br>
+					</p>
+				</div>
+				<div id="fillDigit">
+					<div class="digit"><div class="digitactive"></div></div>
+					<div class="digit"><div class="digitactive"></div></div>
+					<div class="digit"><div class="digitactive"></div></div>
+					<div class="digit"><div class="digitactive"></div></div>
+					<div class="digit"><div class="digitactive"></div></div>
+					<div class="digit"><div class="digitactive"></div></div>
+				</div>
+			</div>
+			<div id="content">
+				<div class="number">1</div>
+				<div class="number">2</div>
+				<div class="number">3</div>
+				<div class="number">4</div>
+				<div class="number">5</div>
+				<div class="number">6</div>
+				<div class="number">7</div>
+				<div class="number">8</div>
+				<div class="number">9</div>
+				<div class="number">Cancel</div>
+				<div class="number">0</div>
+				<div class="number"><img src="backspace.png" width='30' /></div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+		
+			var store = [];
+			
+			for(var i=0;i<12;i++) {
+				if(i==9) {
+					clickOne(i);
+				} else if(i == 11) {
+					clickTwo(i);
+				} else {
+					clickThree(i);
+				}
+			}
+			
+			function clickOne(i) {
+				document.getElementsByClassName("number")[i].addEventListener("click", function() {
+					store = [];
+					var j = 0;
+					while(j<6) {
+						document.getElementsByClassName("digitactive")[j].style.background = "#2877BA";
+						j++;
+					}
+				});
+			}
+			
+			function clickTwo(i) {
+				document.getElementsByClassName("number")[i].addEventListener("click", function() {
+					store.pop();
+					var num = store.length;
+					var L = 0;
+					var numChoice = [
+						["#2877BA","#2877BA","#2877BA","#2877BA","#2877BA","#2877BA"],
+						["#FFFFFF","#2877BA","#2877BA","#2877BA","#2877BA","#2877BA"],
+						["#FFFFFF","#FFFFFF","#2877BA","#2877BA","#2877BA","#2877BA"],
+						["#FFFFFF","#FFFFFF","#FFFFFF","#2877BA","#2877BA","#2877BA"],
+						["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#2877BA","#2877BA"],
+						["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#2877BA"],
+						["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF"]
+					];
+					while(L<6) {
+						if(num == L) {
+							var J = 0;
+							while(J<numChoice.length) {
+								document.getElementsByClassName("digitactive")[L].style.background = numChoice[L][J];
+								J++;
+							}
+						}
+						L++;
+					}
+				});
+			}
+			
+			function clickThree(i) {
+				document.getElementsByClassName("number")[i].addEventListener("click", function() {
+					if(store.length > 5) {
+						alert("Maksimum PIN 6 Digit");
+					} else {
+						var numbers = document.getElementsByClassName("number")[i].innerHTML;
+						store.push(numbers);
+						var num = store.length;
+						digitActive(num);
+					}
+				});
+			}
+			
+			function digitActive(num) {
+				document.getElementsByClassName("digitactive")[num-1].style.background = "#FFFFFF";
+			}
+			
+		</script>
+	</body>
+
+</html>
